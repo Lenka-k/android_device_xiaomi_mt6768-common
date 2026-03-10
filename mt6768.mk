@@ -352,8 +352,8 @@ PRODUCT_PACKAGES += \
     init.target.rc \
     ueventd.mtk.rc
 
-PRODUCT_PACKAGES += \
-    init.recovery.mt6768.rc
+# PRODUCT_PACKAGES += \
+#    init.recovery.mt6768.rc
 
 # Sensors
 PRODUCT_PACKAGES += \
