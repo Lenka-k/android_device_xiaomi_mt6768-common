@@ -355,6 +355,9 @@ PRODUCT_PACKAGES += \
 # PRODUCT_PACKAGES += \
 #    init.recovery.mt6768.rc
 
+PRODUCT_COPY_FILES += \
+    device/xiaomi/mt6768-common/recovery/root/init.recovery.mt6768.rc:$(TARGET_COPY_OUT_RECOVERY)/root/init.recovery.mt6768.rc
+
 # Sensors
 PRODUCT_PACKAGES += \
     android.hardware.sensors@1.0.vendor \
