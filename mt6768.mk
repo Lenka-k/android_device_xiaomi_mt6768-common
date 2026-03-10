@@ -342,6 +342,7 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     fstab.mt6768 \
 #    fstab.mt6768_ramdisk \
+
     init.ago.rc \
     init.connectivity.rc \
     init.modem.rc \
