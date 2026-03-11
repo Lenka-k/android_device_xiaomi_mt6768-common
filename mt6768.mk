@@ -21,7 +21,8 @@ PRODUCT_PACKAGES += \
     android.hardware.audio.service \
     android.hardware.audio@6.0-impl \
     android.hardware.audio.effect@6.0-impl \
-    android.hardware.bluetooth.audio-impl
+    android.hardware.bluetooth.audio-impl \
+    android.hardware.soundtrigger@2.3-impl
 
 PRODUCT_PACKAGES += \
     audio.bluetooth.default \
@@ -31,7 +32,8 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     libtinycompress \
     libtinyxml \
-    tinymix
+    tinymix \
+    libldacBT_bco
 
 PRODUCT_PACKAGES += \
     MtkInCallService
@@ -55,6 +57,7 @@ PRODUCT_COPY_FILES += \
 
 # Biometrics
 PRODUCT_PACKAGES += \
+    com.fingerprints.extension@1.0 \
     android.hardware.biometrics.fingerprint@2.1-service.mt6768
 
 PRODUCT_PACKAGES += \
@@ -79,6 +82,11 @@ PRODUCT_PACKAGES += \
     android.hardware.camera.provider@2.4.vendor \
     android.hardware.camera.provider@2.5.vendor \
     android.hardware.camera.provider@2.6.vendor \
+
+PRODUCT_PACKAGES += \
+    libexpat.vendor \
+    libpng.vendor \
+    libgralloctypes.vendor
 
 PRODUCT_PACKAGES += \
     libdng_sdk.vendor
@@ -127,7 +135,9 @@ PRODUCT_PACKAGES += \
 
 PRODUCT_PACKAGES += \
     libdrm \
-    libdrm.vendor
+    libdrm.vendor \
+    libion.vendor \
+    libui.vendor
 
 # fastbootd
 PRODUCT_PACKAGES += \
@@ -207,11 +217,18 @@ PRODUCT_PACKAGES += \
     libkeymaster4.vendor \
     libkeymaster4support.vendor \
     libpuresoftkeymasterdevice.vendor \
-    libsoft_attestation_cert.vendor
+    libsoft_attestation_cert.vendor \
+    libnetutils.vendor
 
 # Lights
 PRODUCT_PACKAGES += \
     android.hardware.light-service.mt6768
+
+# Lineage Health
+ifneq ($(wildcard hardware/*/interfaces/health),)
+PRODUCT_PACKAGES += \
+    vendor.lineage.health-service.default
+endif
 
 # Media
 PRODUCT_COPY_FILES += \
@@ -257,7 +274,7 @@ PRODUCT_PACKAGES += \
 
 # Power
 PRODUCT_PACKAGES += \
-    android.hardware.power-service.xiaomi-libperfmgr
+    android.hardware.power-service.lineage-libperfmgr
 
 PRODUCT_PACKAGES += \
     libmtkperf_client_vendor \
@@ -341,8 +358,6 @@ PRODUCT_PACKAGES += \
 # Rootdir
 PRODUCT_PACKAGES += \
     fstab.mt6768 \
-#    fstab.mt6768_ramdisk \
-
     init.ago.rc \
     init.connectivity.rc \
     init.modem.rc \
@@ -364,20 +379,31 @@ PRODUCT_PACKAGES += \
 
 PRODUCT_PACKAGES += \
     libshim_sensors \
-    libsensorndkbridge
+    libsensorndkbridge \
+    libpower.vendor
 
 # Shims
 PRODUCT_PACKAGES += \
     libshim_audio \
     libshim_beanpod \
-    libpiex_shim
+    libpiex_shim \
+    libui_shim
 
 # Soong namespaces
 PRODUCT_SOONG_NAMESPACES += \
     hardware/google/interfaces \
     hardware/google/pixel \
     hardware/mediatek \
+    hardware/xiaomi \
+    hardware/mediatek/libmtkperf_client \
+    hardware/lineage/interfaces/power-libperfmgr \
     $(LOCAL_PATH)
+
+# Tetheroffload
+PRODUCT_PACKAGES += \
+    android.hardware.tetheroffload.config@1.0.vendor \
+    android.hardware.tetheroffload.control@1.0.vendor \
+    android.hardware.tetheroffload.control@1.1.vendor
 
 # Thermal
 PRODUCT_PACKAGES += \
@@ -390,14 +416,28 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     android.hardware.vibrator-service.mediatek
 
+# VNDK
+PRODUCT_PACKAGES += \
+    libunwindstack.vendor \
+    libutilscallstack.vendor
+
 # Wi-Fi
 PRODUCT_PACKAGES += \
+    libwifi-hal-wrapper \
     wpa_supplicant \
     hostapd \
     android.hardware.wifi-service
 
 PRODUCT_COPY_FILES += \
     $(call find-copy-subdir-files,*,$(LOCAL_PATH)/configs/wifi/,$(TARGET_COPY_OUT_VENDOR)/etc/wifi)
+
+# Update
+AB_OTA_UPDATER := false
+PRODUCT_SOONG_NAMESPACES += bootable/deprecated-ota
+
+# Use FUSE passthrough
+PRODUCT_PRODUCT_PROPERTIES += \
+    persist.sys.fuse.passthrough.enable=true
 
 # Inherit the proprietary files
 $(call inherit-product, vendor/xiaomi/mt6768-common/mt6768-common-vendor.mk)
