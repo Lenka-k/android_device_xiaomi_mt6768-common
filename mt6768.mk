@@ -94,6 +94,10 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     libutils-v32
 
+PRODUCT_PACKAGES += \
+    libcamera_metadata.vendor \
+    libexif.vendor
+
 # Charger
 PRODUCT_PACKAGES += \
     libsuspend
@@ -106,7 +110,8 @@ PRODUCT_COPY_FILES += \
 # DRM
 PRODUCT_PACKAGES += \
     android.hardware.drm-service.clearkey \
-    libprotobuf-cpp-lite-3.9.1-vendorcompat
+    libprotobuf-cpp-lite-3.9.1-vendorcompat \
+    libcrypto_shim.vendor
 
 PRODUCT_PACKAGES += \
     libmockdrmcryptoplugin
@@ -208,6 +213,13 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     android.hardware.ir@1.0-impl \
     android.hardware.ir@1.0-service
+
+# Enable DM file pre-opting to reduce first boot time
+PRODUCT_DEX_PREOPT_GENERATE_DM_FILES := true
+
+# Reduce system server verbosity.
+PRODUCT_SYSTEM_SERVER_DEBUG_INFO := false
+PRODUCT_OTHER_JAVA_DEBUG_INFO := false
 
 # Keymaster
 PRODUCT_PACKAGES += \
