@@ -32,8 +32,7 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     libtinycompress \
     libtinyxml \
-    tinymix \
-    libldacBT_bco
+    tinymix
 
 PRODUCT_PACKAGES += \
     MtkInCallService
@@ -407,7 +406,6 @@ PRODUCT_SOONG_NAMESPACES += \
     hardware/google/pixel \
     hardware/mediatek \
     hardware/xiaomi \
-    hardware/mediatek/libmtkperf_client \
     hardware/lineage/interfaces/power-libperfmgr \
     $(LOCAL_PATH)
 
